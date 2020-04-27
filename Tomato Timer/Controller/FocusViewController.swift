@@ -13,18 +13,23 @@ class FocusViewController: UIViewController {
     let imageName: [String] = ["pause.circle", "play.circle"]
     var pos = 0
     var timer = Timer()
-    var focusValue: Int?
-    var breakValue: Int?
+    var focusValue = 25
     let totalTime = 25
+    var activityName: String?
+    var sessionNumber: String?
     @IBOutlet weak var pauseImage: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var focusTimer: UILabel!
+    @IBOutlet weak var activityLabel: UILabel!
+    @IBOutlet weak var sessionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        focusTimer.text = "\(focusValue!)"
+        activityLabel.text = "\(activityName!)"
+        sessionLabel.text = "Session: 1 out of \(sessionNumber!)"
+        focusTimer.text = "\(focusValue)"
         timerImage.image = UIImage(named: "tomato")
         pauseImage.image = UIImage(systemName: imageName[0])
         countdownTimer()
@@ -48,12 +53,12 @@ class FocusViewController: UIViewController {
     }
     
     @objc func updateTimer() {
-        if focusValue! != 0 {
-            focusValue! -= 1
-            focusTimer.text = String(format: "%02d", focusValue!)
-            progressBar.progress = Float(focusValue!) / Float(totalTime)
+        if focusValue != 0 {
+            focusValue -= 1
+            focusTimer.text = String(format: "%02d", focusValue)
+            progressBar.progress = Float(focusValue) / Float(totalTime)
             print(Float(totalTime))
-            print(Float(focusValue!))
+            print(Float(focusValue))
         } else {
             timerImage.image = UIImage(named: "cucumber")
             progressBar.progressTintColor = UIColor(red: 0.00, green: 0.55, blue: 0.01, alpha: 1.00)
