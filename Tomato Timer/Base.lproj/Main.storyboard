@@ -124,7 +124,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Session: 1 out of 4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6bo-gR-A1V">
-                                <rect key="frame" x="127" y="95" width="160" height="50"/>
+                                <rect key="frame" x="87" y="95" width="240" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -161,9 +161,11 @@
                         <outlet property="progressBar" destination="RjL-2j-jXl" id="Cxh-Kh-1ff"/>
                         <outlet property="sessionLabel" destination="6bo-gR-A1V" id="HHs-2i-8yr"/>
                         <outlet property="timerImage" destination="NtL-kR-Caw" id="0G3-Ld-YkW"/>
+                        <segue destination="EVt-j3-IR1" kind="unwind" identifier="unwindToMain" unwindAction="unwind:" id="P9U-YC-ICL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oo7-xg-Onv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="EVt-j3-IR1" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="744.92753623188412" y="117.85714285714285"/>
         </scene>

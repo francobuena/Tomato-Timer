@@ -40,6 +40,10 @@ class SettingsViewController: UIViewController {
             
         }
     }
+    
+    @IBAction func unwind( _ seg: UIStoryboardSegue) {
+        performSegue(withIdentifier: "unwindToMain", sender: self)
+    }
 
 }
 
