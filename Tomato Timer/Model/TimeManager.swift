@@ -11,26 +11,26 @@ import Foundation
 // struct that holds the values of the picker view
 struct TimeManager {
     
-    var focusArray: [Int] = []
-    var breakArray: [Int] = []
+    var focusMin: [Int] = []
+    var focusSec: [Int] = []
+    var breakMin: [Int] = []
+    var breakSec: [Int] = []
     
     init() {
-        for number in 1...25 {
-            focusArray.append(number)
+        for number in 0...60 {
+            focusMin.append(number)
         }
-        focusArray.reverse()
         
-        for number in 1...5 {
-            breakArray.append(number)
+        for number in 0...60 {
+            focusSec.append(number)
         }
-        breakArray.reverse()
-    }
-    
-    func getFocusTime(as minutes: Int) {
-
-    }
-    
-    func getBreakTime(as minutes: Int) {
-
+        
+        for number in 0...60 {
+            breakMin.append(number)
+        }
+        
+        for number in 0...60 {
+            breakSec.append(number)
+        }
     }
 }

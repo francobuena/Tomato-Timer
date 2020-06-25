@@ -11,16 +11,17 @@ import UIKit
 class FocusViewController: UIViewController {
 
     let imageName: [String] = ["pause.circle", "play.circle"]
+    let defaults = UserDefaults.standard
     var timerArray: [Timer] = []
     var focusComplete = false
     var breakComplete = false
     var sessionComplete = false
     var currentSession = 1
     var pos = 0
-    var timeLeft = 5
-    let totalTime = 5
-    var breakTimeLeft = 3
-    let breakTotalTime = 3
+    var timeLeft: Int?
+    var totalTime: Int?
+    var breakTimeLeft: Int?
+    var breakTotalTime: Int?
     var activityName: String?
     var sessionNumber: String?
     var timer = Timer()
@@ -37,41 +38,12 @@ class FocusViewController: UIViewController {
         
         activityLabel.text = "\(activityName!)"
         sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
-        pauseImage.image = UIImage(systemName: imageName[0])
         focusScreen()
+        pauseImage.image = UIImage(systemName: imageName[0])
        // focusCountdownTimer()
     }
-
-    func focusScreen() {
-        timeLeft = 5
-        timerImage.image = UIImage(named: "tomato")
-        sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
-        progressBar.progress = 1.0
-        progressBar.progressTintColor = UIColor(red: 0.78, green: 0.10, blue: 0.07, alpha: 1.00)
-        pauseImage.tintColor = UIColor(red: 0.78, green: 0.10, blue: 0.07, alpha: 1.00)
-        mainTimer.text = timeFormatted(totalTime)
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(focusUpdateTimer), userInfo: nil, repeats: true)
-    }
     
-    func breakScreen() {
-        breakTimeLeft = 3
-        timerImage.image = UIImage(named: "cucumber")
-        sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
-        progressBar.progress = 1.0
-        progressBar.progressTintColor = UIColor(red: 0.00, green: 0.55, blue: 0.01, alpha: 1.00)
-        pauseImage.tintColor = UIColor(red: 0.00, green: 0.55, blue: 0.01, alpha: 1.00)
-        mainTimer.text = timeFormatted(breakTotalTime)
-        breakTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(breakUpdateTimer), userInfo: nil, repeats: true)
-    }
-
-    /// Function to format the time text
-    func timeFormatted(_ totalSeconds: Int) -> String {
-        let seconds: Int = totalSeconds % 60
-        let minutes: Int = (totalSeconds / 60) % 60
-        return String(format: "%01d:%02d", minutes, seconds)
-    }
-
-    @IBAction func pauseButton(_ sender: Any) {
+    @IBAction func pauseButton(_ sender: UIButton) {
         if pos == 0 {
             pauseImage.image = UIImage(systemName: imageName[1])
             pos = 1
@@ -83,6 +55,42 @@ class FocusViewController: UIViewController {
             focusComplete ? breakCountdownTimer() : focusCountdownTimer()
         }
     }
+    
+    @IBAction func cancelButton(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func focusScreen() {
+        timeLeft = defaults.integer(forKey: "FocusSetting")
+        timerImage.image = UIImage(named: "tomato")
+        sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
+        progressBar.progress = 1.0
+        progressBar.progressTintColor = UIColor(red: 0.78, green: 0.10, blue: 0.07, alpha: 1.00)
+        pauseImage.tintColor = UIColor(red: 0.78, green: 0.10, blue: 0.07, alpha: 1.00)
+        mainTimer.text = timeFormatted(totalTime!)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(focusUpdateTimer), userInfo: nil, repeats: true)
+    }
+    
+    func breakScreen() {
+        breakTimeLeft = defaults.integer(forKey: "BreakSetting")
+        timerImage.image = UIImage(named: "cucumber")
+        sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
+        progressBar.progress = 1.0
+        progressBar.progressTintColor = UIColor(red: 0.00, green: 0.55, blue: 0.01, alpha: 1.00)
+        pauseImage.tintColor = UIColor(red: 0.00, green: 0.55, blue: 0.01, alpha: 1.00)
+        mainTimer.text = timeFormatted(breakTotalTime!)
+        breakTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(breakUpdateTimer), userInfo: nil, repeats: true)
+    }
+
+    /// Function to format the time text
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        return String(format: "%01d:%02d", minutes, seconds)
+    }
+
+    
 
     func focusCountdownTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(focusUpdateTimer), userInfo: nil, repeats: true)
@@ -90,9 +98,9 @@ class FocusViewController: UIViewController {
     
     @objc func focusUpdateTimer() {
            if timeLeft != 0 {
-               timeLeft -= 1
-               mainTimer.text = timeFormatted(timeLeft)
-               progressBar.progress = Float(timeLeft) / Float(totalTime)
+               timeLeft! -= 1
+               mainTimer.text = timeFormatted(timeLeft!)
+               progressBar.progress = Float(timeLeft!) / Float(totalTime!)
            } else {
                focusComplete = true
                timer.invalidate()
@@ -111,9 +119,9 @@ class FocusViewController: UIViewController {
     
     @objc func breakUpdateTimer() {
         if breakTimeLeft != 0 {
-            breakTimeLeft -= 1
-            mainTimer.text = timeFormatted(breakTimeLeft)
-            progressBar.progress = Float(breakTimeLeft) / Float(breakTotalTime)
+            breakTimeLeft! -= 1
+            mainTimer.text = timeFormatted(breakTimeLeft!)
+            progressBar.progress = Float(breakTimeLeft!) / Float(breakTotalTime!)
         } else {
             breakComplete = true
             breakTimer.invalidate()
