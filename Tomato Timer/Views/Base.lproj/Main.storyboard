@@ -7,22 +7,57 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--History-->
         <scene sceneID="jH0-0f-S2y">
             <objects>
-                <tableViewController id="NsP-Rg-5td" sceneMemberID="viewController">
+                <tableViewController id="NsP-Rg-5td" customClass="HistoryViewController" customModule="Tomato_Timer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jYx-SC-UHN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="NIf-PV-3tK">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActivityCell" id="NIf-PV-3tK" customClass="ActivityCustomCell" customModule="Tomato_Timer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NIf-PV-3tK" id="hfG-u4-vba">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="54" translatesAutoresizingMaskIntoConstraints="NO" id="J5A-MX-xmC">
+                                            <rect key="frame" x="25" y="11" width="374" height="20"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LNN-fE-Muv">
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="2tr-zQ-eg1"/>
+                                                        <constraint firstAttribute="width" constant="160" id="40y-0w-Def"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Nx9-Wo-AwF"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="XLt-rf-3XU"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWq-b2-MMZ">
+                                                    <rect key="frame" x="214" y="0.0" width="160" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="1mm-2P-lbx"/>
+                                                        <constraint firstAttribute="height" constant="20" id="HbI-Cj-LTG"/>
+                                                        <constraint firstAttribute="width" constant="160" id="RSW-2S-zfE"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Rmi-pH-lLE"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cellActivity" destination="LNN-fE-Muv" id="hEc-F2-wru"/>
+                                    <outlet property="cellSession" destination="AWq-b2-MMZ" id="dO2-sL-o0F"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -30,11 +65,11 @@
                             <outlet property="delegate" destination="NsP-Rg-5td" id="qbq-uB-0bJ"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" systemItem="history" id="rph-Xn-f5H"/>
+                    <navigationItem key="navigationItem" title="History" id="5Hh-P9-gr4"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Xp-pa-d58" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="884" y="-634"/>
+            <point key="canvasLocation" x="1789.8550724637682" y="-634.23913043478262"/>
         </scene>
         <!--Timer-->
         <scene sceneID="tne-QT-ifu">
@@ -449,7 +484,7 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
-                        <segue destination="NsP-Rg-5td" kind="relationship" relationship="viewControllers" id="UsX-pA-hRs"/>
+                        <segue destination="BNk-P9-Qu6" kind="relationship" relationship="viewControllers" id="UsX-pA-hRs"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Tg9-Wx-9BU"/>
                         <segue destination="gDG-b2-iJ3" kind="relationship" relationship="viewControllers" id="2O4-Bi-qxX"/>
                     </connections>
@@ -457,6 +492,30 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eR7-Qh-MZR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-58.399999999999999" y="117.48768472906404"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="jSC-aS-PU4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BNk-P9-Qu6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="history" id="rph-Xn-f5H"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Tys-nh-hEw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="NsP-Rg-5td" kind="relationship" relationship="rootViewController" id="zdd-rD-Zm4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lgl-9r-YpK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="882.60869565217399" y="-634.23913043478262"/>
         </scene>
     </scenes>
     <resources>
