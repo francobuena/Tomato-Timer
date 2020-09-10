@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol CompletionDelegate: class {
+    func didCompleteSession(activityName: String, sessionsCompleted: Int)
+}
+
 class FocusViewController: UIViewController {
 
     let imageName: [String] = ["pause.circle", "play.circle"]
+    var completionDelegate: CompletionDelegate?
+    var newActivity: Activity?
     let defaults = UserDefaults.standard
     var timerArray: [Timer] = []
     var focusComplete = false
@@ -32,17 +38,17 @@ class FocusViewController: UIViewController {
     @IBOutlet weak var mainTimer: UILabel!
     @IBOutlet weak var activityLabel: UILabel!
     @IBOutlet weak var sessionLabel: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         activityLabel.text = "\(activityName!)"
         sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
         focusScreen()
         pauseImage.image = UIImage(systemName: imageName[0])
        // focusCountdownTimer()
     }
-    
+
     @IBAction func pauseButton(_ sender: UIButton) {
         if pos == 0 {
             pauseImage.image = UIImage(systemName: imageName[1])
@@ -55,12 +61,12 @@ class FocusViewController: UIViewController {
             focusComplete ? breakCountdownTimer() : focusCountdownTimer()
         }
     }
-    
+
     @IBAction func cancelButton(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
     }
-    
+
     func focusScreen() {
         timeLeft = defaults.integer(forKey: "FocusSetting")
         timerImage.image = UIImage(named: "tomato")
@@ -71,7 +77,7 @@ class FocusViewController: UIViewController {
         mainTimer.text = timeFormatted(totalTime!)
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(focusUpdateTimer), userInfo: nil, repeats: true)
     }
-    
+
     func breakScreen() {
         breakTimeLeft = defaults.integer(forKey: "BreakSetting")
         timerImage.image = UIImage(named: "cucumber")
@@ -90,12 +96,12 @@ class FocusViewController: UIViewController {
         return String(format: "%01d:%02d", minutes, seconds)
     }
 
-    
+
 
     func focusCountdownTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(focusUpdateTimer), userInfo: nil, repeats: true)
     }
-    
+
     @objc func focusUpdateTimer() {
            if timeLeft != 0 {
                timeLeft! -= 1
@@ -107,16 +113,16 @@ class FocusViewController: UIViewController {
                breakScreen()
            }
     }
-    
+
     func resetFocusTimer() {
         timer.invalidate()
         focusCountdownTimer()
     }
-    
+
     func breakCountdownTimer() {
         breakTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(breakUpdateTimer), userInfo: nil, repeats: true)
     }
-    
+
     @objc func breakUpdateTimer() {
         if breakTimeLeft != 0 {
             breakTimeLeft! -= 1
@@ -128,13 +134,43 @@ class FocusViewController: UIViewController {
             checkCurrentSession()
         }
     }
-    
+
     func checkCurrentSession() {
         let totalSession = Int(sessionNumber!)
+
         if currentSession == totalSession {
+
+            completionDelegate?.didCompleteSession(activityName: activityName!, sessionsCompleted: Int(sessionNumber!)!)
+
+            guard let navVC = tabBarController?.viewControllers?[0] else {
+                print("view controller is nil")
+                return
+            }
+
+            let uiNav = navVC as! UINavigationController
+
+            let historyController = uiNav.topViewController as! HistoryViewController
+
+            if let name = activityName, let session = sessionNumber {
+                newActivity = Activity(name: name, session: Int(session) ?? 0)
+            }
+
+            historyController.newActivity = newActivity
+
+//            let navVC = tabBarController?.viewControllers![0] as! UINavigationController
+//
+//            let historyTabController = navVC.topViewController as! HistoryViewController
+//
+//            let newActivity = Activity(name: activityName!, session: Int(sessionNumber!)!)
+//
+//            historyTabController.newActivity = newActivity
+
             let alert = UIAlertController(title: "Congrats!", message: "You have completed all the sessions.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                        self.dismiss(animated: true, completion: nil)
+                }))
             self.present(alert, animated: true, completion: nil)
+
         } else {
             currentSession += 1
             focusComplete = false
@@ -142,5 +178,5 @@ class FocusViewController: UIViewController {
             focusScreen()
         }
     }
-    
+
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 
-class Activity {
-    var name: String = ""
-    var session: Int = 0
+struct Activity: Codable {
+    var name: String
+    var session: Int
 }

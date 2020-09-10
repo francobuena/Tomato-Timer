@@ -10,7 +10,6 @@ import Foundation
 
 struct ConversionBrain {
     
-    
     mutating func convertToSeconds(minutes: Int, seconds: Int) -> Int {
         let secondsResult = (minutes * 60) + seconds
         return secondsResult

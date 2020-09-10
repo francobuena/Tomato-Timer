@@ -9,7 +9,7 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITabBarControllerDelegate {
-    
+
     let timeManager = TimeManager()
     var conversion = ConversionBrain()
     var focusMin = 0
@@ -21,12 +21,12 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     @IBOutlet weak var focusSecond: UIPickerView!
     @IBOutlet weak var breakMinute: UIPickerView!
     @IBOutlet weak var breakSecond: UIPickerView!
-    
+
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch pickerView {
         case focusMinute:
@@ -41,7 +41,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
             return 1
         }
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch pickerView {
         case focusMinute:
@@ -56,7 +56,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
             return ""
         }
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch pickerView {
         case focusMinute:
@@ -78,15 +78,15 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         default:
             print("Nice")
         }
-        
+
         let focusSetting = conversion.convertToSeconds(minutes: focusMin, seconds: focusSec)
         let breakSetting = conversion.convertToSeconds(minutes: breakMin, seconds: breakSec)
-        
+
         defaults.set(focusSetting, forKey: "FocusSetting")
         defaults.set(breakSetting, forKey: "BreakSetting")
     }
 
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -99,13 +99,13 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         breakMinute.delegate = self
         breakSecond.dataSource = self
         breakSecond.delegate = self
-        
+
         self.tabBarController?.delegate = self
-        
-        
+
+
     }
-    
-    
+
+
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController.isKind(of: SettingsViewController.self as AnyClass) {
             let viewController = tabBarController.viewControllers?[1] as! MainViewController
