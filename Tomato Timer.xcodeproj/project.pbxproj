@@ -14,6 +14,7 @@
 		D8490166243F0C2500CC841B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8490165243F0C2500CC841B /* Assets.xcassets */; };
 		D8490169243F0C2500CC841B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8490167243F0C2500CC841B /* LaunchScreen.storyboard */; };
 		D8490172243F30BB00CC841B /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8490171243F30BA00CC841B /* TimeManager.swift */; };
+		D854A5E025D29063001AF43B /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D854A5DF25D29063001AF43B /* DataStorage.swift */; };
 		D886CAAD24433AF2007C6397 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D886CAAC24433AF2007C6397 /* FocusViewController.swift */; };
 		D8CD246A249CA92300013909 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CD2469249CA92300013909 /* SettingsViewController.swift */; };
 		D8CD246C24A18F6800013909 /* ConversionBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8CD246B24A18F6800013909 /* ConversionBrain.swift */; };
@@ -32,6 +33,7 @@
 		D8490168243F0C2500CC841B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D849016A243F0C2500CC841B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D8490171243F30BA00CC841B /* TimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		D854A5DF25D29063001AF43B /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		D886CAAC24433AF2007C6397 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
 		D8CD2469249CA92300013909 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D8CD246B24A18F6800013909 /* ConversionBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionBrain.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				D8CD246B24A18F6800013909 /* ConversionBrain.swift */,
 				D8CD246D24A9AB8100013909 /* Activity.swift */,
 				D8CD247324A9B36200013909 /* ActivityCustomCell.swift */,
+				D854A5DF25D29063001AF43B /* DataStorage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 			files = (
 				D8490161243F0C1D00CC841B /* MainViewController.swift in Sources */,
 				D886CAAD24433AF2007C6397 /* FocusViewController.swift in Sources */,
+				D854A5E025D29063001AF43B /* DataStorage.swift in Sources */,
 				D8CD247424A9B36200013909 /* ActivityCustomCell.swift in Sources */,
 				D849015D243F0C1D00CC841B /* AppDelegate.swift in Sources */,
 				D8490172243F30BB00CC841B /* TimeManager.swift in Sources */,

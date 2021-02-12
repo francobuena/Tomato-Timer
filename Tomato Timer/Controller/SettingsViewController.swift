@@ -62,19 +62,15 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         case focusMinute:
             let selectedFM = timeManager.focusMin[row]
             focusMin = selectedFM
-            print(focusMin)
         case focusSecond:
             let selectedFS = timeManager.focusSec[row]
             focusSec = selectedFS
-            print(focusSec)
         case breakMinute:
             let selectedBM = timeManager.breakMin[row]
             breakMin = selectedBM
-            print(breakMin)
         case breakSecond:
             let selectedBS = timeManager.focusSec[row]
             breakSec = selectedBS
-            print(breakSec)
         default:
             print("Nice")
         }

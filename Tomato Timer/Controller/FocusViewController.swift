@@ -42,11 +42,16 @@ class FocusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        activityLabel.text = "\(activityName!)"
-        sessionLabel.text = "Session: \(currentSession) out of \(sessionNumber!)"
+        if let activity = activityName {
+            activityLabel.text = "\(activity)"
+        }
+
+        if let session = sessionNumber {
+            sessionLabel.text = "Session: \(currentSession) out of \(session)"
+        }
+
         focusScreen()
         pauseImage.image = UIImage(systemName: imageName[0])
-       // focusCountdownTimer()
     }
 
     @IBAction func pauseButton(_ sender: UIButton) {
@@ -103,15 +108,16 @@ class FocusViewController: UIViewController {
     }
 
     @objc func focusUpdateTimer() {
-           if timeLeft != 0 {
-               timeLeft! -= 1
-               mainTimer.text = timeFormatted(timeLeft!)
-               progressBar.progress = Float(timeLeft!) / Float(totalTime!)
-           } else {
-               focusComplete = true
-               timer.invalidate()
-               breakScreen()
-           }
+        // figure out a way to make this work with safe unwrapping
+        if timeLeft != 0 {
+           timeLeft! -= 1
+           mainTimer.text = timeFormatted(timeLeft!)
+           progressBar.progress = Float(timeLeft!) / Float(totalTime!)
+        } else {
+           focusComplete = true
+           timer.invalidate()
+           breakScreen()
+        }
     }
 
     func resetFocusTimer() {
@@ -124,6 +130,7 @@ class FocusViewController: UIViewController {
     }
 
     @objc func breakUpdateTimer() {
+        // figure out a way to make this work with safe unwrapping
         if breakTimeLeft != 0 {
             breakTimeLeft! -= 1
             mainTimer.text = timeFormatted(breakTimeLeft!)
@@ -136,47 +143,38 @@ class FocusViewController: UIViewController {
     }
 
     func checkCurrentSession() {
+        
         let totalSession = Int(sessionNumber!)
 
         if currentSession == totalSession {
-
-            completionDelegate?.didCompleteSession(activityName: activityName!, sessionsCompleted: Int(sessionNumber!)!)
-
-            guard let navVC = tabBarController?.viewControllers?[0] else {
-                print("view controller is nil")
-                return
-            }
-
-            let uiNav = navVC as! UINavigationController
-
-            let historyController = uiNav.topViewController as! HistoryViewController
-
-            if let name = activityName, let session = sessionNumber {
-                newActivity = Activity(name: name, session: Int(session) ?? 0)
-            }
-
-            historyController.newActivity = newActivity
-
-//            let navVC = tabBarController?.viewControllers![0] as! UINavigationController
-//
-//            let historyTabController = navVC.topViewController as! HistoryViewController
-//
-//            let newActivity = Activity(name: activityName!, session: Int(sessionNumber!)!)
-//
-//            historyTabController.newActivity = newActivity
-
-            let alert = UIAlertController(title: "Congrats!", message: "You have completed all the sessions.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        self.dismiss(animated: true, completion: nil)
-                }))
-            self.present(alert, animated: true, completion: nil)
-
+            self.performSegue(withIdentifier: "HistoryViewSegue", sender: self)
         } else {
             currentSession += 1
             focusComplete = false
             breakComplete = false
             focusScreen()
         }
+
+
+//            let alert = UIAlertController(title: "Congrats!", message: "You have completed all the sessions.", preferredStyle: UIAlertController.Style.alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+//                        self.dismiss(animated: true, completion: nil)
+//                }))
+//            self.present(alert, animated: true, completion: nil)
+            
+
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "HistoryViewSegue" {
+            let historyViewController = segue.destination as! HistoryViewController
+            historyViewController.activityName = self.activityName
+            historyViewController.totalSessions = self.currentSession
+        }
     }
 
 }
+
+
+
+
